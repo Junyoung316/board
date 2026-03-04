@@ -1,0 +1,26 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: board-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: board_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      # 작성하신 절대 경로를 왼쪽에 넣고, 오른쪽은 MySQL 데이터 경로를 고정합니다.
+      - /Users/junyoung/Developer/board/board/db_data:/var/lib/mysql
+    networks:
+      - board-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  board-network:
+    driver: bridge

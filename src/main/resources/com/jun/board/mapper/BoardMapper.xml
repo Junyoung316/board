@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jun.board.mapper.BoardMapper">
+
+    <!-- resultMap -->
+    <resultMap id="BoardMap" type="Boards">
+        <id property="no" column="no"/>
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="writer" column="writer"/>
+        <result property="content" column="content"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <select id="list" resultMap="BoardMap">
+        SELECT * FROM board_db.boards ORDER BY no DESC
+    </select>
+
+    <select id="select" resultMap="BoardMap">
+        SELECT * FROM board_db.boards WHERE no = #{no}
+    </select>
+
+    <select id="selectById" resultMap="BoardMap">
+        SELECT * FROM board_db.boards WHERE id = #{id}
+    </select>
+
+    <!-- useGeneratedKeys: 자동증가된(AI) boards의 no를 Boards 객체의 no 변수에 넣어 준다 -->
+    <insert id="insert" parameterType="Boards" useGeneratedKeys="true" keyProperty="no">
+        INSERT INTO board_db.boards (id, title, content, writer)
+        VALUES (#{id}, #{title}, #{content}, #{writer})
+    </insert>
+
+    <update id="update">
+        UPDATE board_db.boards
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="writer != null">writer = #{writer},</if>
+            <if test="content != null">content = #{content},</if>
+            updated_at = now()
+        </set>
+        WHERE no = #{no}
+    </update>
+
+    <update id="updateById">
+        UPDATE board_db.boards
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="writer != null">writer = #{writer},</if>
+            <if test="content != null">content = #{content},</if>
+            updated_at = now()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM board_db.boards WHERE no = #{no}
+    </delete>
+
+    <delete id="deleteById">
+        DELETE FROM board_db.boards WHERE id = #{id}
+    </delete>
+
+</mapper>
