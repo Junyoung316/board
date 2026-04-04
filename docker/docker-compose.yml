@@ -24,8 +24,8 @@ services:
 
   backend:
     build:
-      context: ..          # 빌드 컨텍스트를 프로젝트 루트로
-      dockerfile: docker/Dockerfile   # Dockerfile 경로 명시
+      context: ..
+      dockerfile: docker/Dockerfile
     container_name: board-backend
     restart: always
     ports:
@@ -43,3 +43,6 @@ services:
 networks:
   board-network:
     driver: bridge
+
+volumes:
+  mysql_data:
