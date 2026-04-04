@@ -4,6 +4,7 @@ services:
     container_name: board-mysql
     restart: always
     environment:
+      SPRING_PROFILES_ACTIVE: prod
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: board_db
       MYSQL_USER: user
