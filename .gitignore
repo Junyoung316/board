@@ -43,4 +43,8 @@ out/
 ### VS Code ###
 .vscode/
 
+/note
+/docker/docker-compose.dev.yml
+/db_data
+
 

@@ -14,6 +14,8 @@
         <result property="content" column="content"/>
         <result property="createdAt" column="created_at"/>
         <result property="updatedAt" column="updated_at"/>
+        <association property="file" column="id" javaType="Files" select="selectMainFile"></association>
+        <collection property="fileList" column="id" ofType="Files" select="fileList"></collection>
     </resultMap>
 
     <select id="list" resultMap="BoardMap">
@@ -63,5 +65,16 @@
     <delete id="deleteById">
         DELETE FROM board_db.boards WHERE id = #{id}
     </delete>
+
+    <select id="selectMainFile" resultType="Files">
+        select * from board_db.files
+        where p_id = #{id} and type = 'MAIN'
+        limit 0, 1
+    </select>
+
+    <select id="fileList" resultType="Files">
+        select * from board_db.files
+        where p_id = #{id} and type = 'SUB'
+    </select>
 
 </mapper>

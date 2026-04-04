@@ -1,6 +1,112 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-</beans>
+<mapper namespace="com.jun.board.mapper.FileMapper">
+
+    <!--  파일 목록  -->
+    <select id="list" resultType="Files">
+        select * from board_db.files order by created_at desc
+    </select>
+
+    <!--  부모 테이블 기준 파일 목록  -->
+    <select id="listByParent" resultType="Files">
+        select * from board_db.files
+        where p_id = #{pId}
+        order by created_at desc
+    </select>
+
+    <select id="select" resultType="Files">
+        select * from board_db.files
+        where no = #{no}
+    </select>
+
+    <select id="selectById" resultType="Files">
+        select * from board_db.files
+        where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="Files" useGeneratedKeys="true" keyProperty="no">
+        insert into board_db.files (id, p_id, file_name, origin_name, file_path, file_size, type, seq)
+        values (#{id}, #{pId}, #{fileName}, #{originName}, #{filePath}, #{fileSize}, #{type}, #{seq})
+    </insert>
+
+    <update id="update">
+        update board_db.files
+        <set>
+            <if test="type != null"> type = #{type}, </if>
+            <if test="seq != null"> seq = #{seq}, </if>
+            <if test="pId != null"> pId = #{pId}, </if>
+            <if test="fileName != null"> file_name = #{fileName}, </if>
+            <if test="originName != null"> origin_name = #{originName}, </if>
+            <if test="filePath != null"> file_path = #{filePath}, </if>
+            <if test="fileSize != null"> file_size = #{fileSize}, </if>
+            updated_at = now()
+        </set>
+        where no = #{no}
+    </update>
+
+    <delete id="delete">
+        delete from board_db.files where no = #{no}
+    </delete>
+
+    <delete id="deleteById">
+        delete from board_db.files where id = #{id}
+    </delete>
+
+    <!--  부모 기준 파일 목록 삭제  -->
+    <delete id="deleteByParent">
+        delete from board_db.files
+        where p_id = #{pId}
+    </delete>
+
+    <!--  선택 삭제 - no (문자열 - IN)  -->
+    <delete id="deleteFiles">
+        delete from files
+        where no IN ( ${no} ) -- String no = "1,2,3";
+                              -- no IN ( 1,2,3 )
+    </delete>
+
+    <delete id="deleteFilesById">
+        delete from files
+        where id IN ( ${id} ) -- String id = "'ID1', 'ID2', 'ID3'";
+                              -- id IN ( 'ID1', 'ID2', 'ID3' )
+    </delete>
+
+    <!--  선택 삭제 - no (List 컬렉션)  -->
+    <delete id="deleteFileList" parameterType="List">
+        delete from files
+        where no IN
+        <foreach collection="noList" item="no" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+        -- ( 1, 2, 3 ), MyBatis 동적 쿼리에서 생성
+    </delete>
+
+    <!--  선택 삭제 - id (List 컬렉션)  -->
+    <delete id="deleteFileListById" parameterType="List">
+        delete from files
+        where id IN
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        -- ( 'ID1', 'ID2', 'ID3' ), MyBatis 동적 쿼리에서 생성
+    </delete>
+
+    <!--  타입별 파일 조회  -->
+    <select id="selectByType=" resultType="Files">
+        select * from files
+        where p_id = #{pId}
+        and type = #{type}
+        limit 0, 1
+    </select>
+
+    <!--  타입별 파일 조회  -->
+    <select id="listByType=" resultType="Files">
+        select * from files
+        where p_id = #{pId}
+        and type = #{type}
+    </select>
+
+</mapper>

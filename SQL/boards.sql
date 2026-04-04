@@ -1,6 +1,3 @@
-
-use board_db;
-
 DROP TABLE if exists boards;
 
 create table boards (
