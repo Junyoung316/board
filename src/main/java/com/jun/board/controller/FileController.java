@@ -76,7 +76,7 @@ public class FileController {
         }
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> destroy(@PathVariable("id") String id) {
         try {
             boolean result = fileService.deleteById(id);
