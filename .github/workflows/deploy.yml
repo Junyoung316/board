@@ -18,7 +18,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: 2222
           script: |
-            cd ~/board
+            cd ~/projects/board
             git pull origin main
             cd docker
             docker compose down
