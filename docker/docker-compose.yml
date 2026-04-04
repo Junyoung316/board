@@ -11,7 +11,8 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ~/mnt/nas/docker-data/db_data:/var/lib/mysql
+      - /mnt/nas/docker-data/db_data:/var/lib/mysql
+      - ../SQL:/docker-entrypoint-initdb.d
     networks:
       - board-network
     healthcheck:
