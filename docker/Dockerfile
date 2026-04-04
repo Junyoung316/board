@@ -1,6 +1,6 @@
 FROM gradle:8-jdk21-alpine AS builder
 WORKDIR /app
-COPY ../.. .                          # 루트에서 소스 복사
+COPY . .
 RUN gradle bootJar --no-daemon
 
 FROM eclipse-temurin:21-jre-alpine
