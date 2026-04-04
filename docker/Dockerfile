@@ -1,5 +1,7 @@
 FROM gradle:8-jdk21-alpine AS builder
 WORKDIR /app
+COPY build.gradle settings.gradle ./
+RUN gradle dependencies --no-daemon
 COPY . .
 RUN gradle bootJar --no-daemon
 
