@@ -46,7 +46,7 @@ out/
 /note
 /docker/docker-compose.dev.yml
 /db_data
-!**/src/main/resources/application-dev.properties
+/src/main/resources/application-dev.properties
 
 
 
