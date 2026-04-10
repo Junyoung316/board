@@ -3,14 +3,14 @@ services:
     image: mysql:8.0
     container_name: board-mysql
     restart: always
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
     environment:
-      SPRING_PROFILES_ACTIVE: prod
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: board_db
       MYSQL_USER: user
       MYSQL_PASSWORD: password
-      MYSQL_CHARSET: utf8mb4
-      MYSQL_COLLATION: utf8mb4_unicode_ci
     ports:
       - "3306:3306"
     volumes:
@@ -34,9 +34,9 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/board_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
-      SPRING_DATASOURCE_USERNAME: user
-      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_PROFILES_ACTIVE: prod
+      DB_USERNAME: user
+      DB_PASSWORD: password
       SERVER_SERVLET_ENCODING_CHARSET: UTF-8
       SERVER_SERVLET_ENCODING_FORCE: "true"
       SERVER_SERVLET_ENCODING_ENABLED: "true"
