@@ -1,3 +1,6 @@
+SET NAMES utf8mb4;
+SET CHARACTER SET utf8mb4;
+
 DROP TABLE if exists boards;
 
 create table boards (
@@ -8,7 +11,7 @@ create table boards (
   content TEXT null comment '내용',
   created_at timestamp not null default CURRENT_TIMESTAMP comment '등록일자',
   updated_at timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '수정일자'
-) comment '게시판';
+) comment '게시판' DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 샘플 데이터
 
