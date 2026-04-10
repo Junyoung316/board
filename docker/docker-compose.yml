@@ -37,6 +37,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/board_db
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: password
+      UPLOAD_PATH: /app/upload
     volumes:
       - /mnt/nas/docker-data/upload:/app/upload
     depends_on:
@@ -44,11 +45,6 @@ services:
         condition: service_healthy
     networks:
       - board-network
-  app:
-    environment:
-      - UPLOAD_PATH=/app/uploads
-    volumes:
-      - /mnt/nas/docker-data/upload
 
 networks:
   board-network:
