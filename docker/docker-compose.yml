@@ -44,6 +44,11 @@ services:
         condition: service_healthy
     networks:
       - board-network
+  app:
+    environment:
+      - UPLOAD_PATH=/app/uploads
+    volumes:
+      - /mnt/nas/docker-data/upload
 
 networks:
   board-network:
